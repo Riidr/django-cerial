@@ -19,8 +19,17 @@ class CerialField(models.TextField):
 
     def pre_save(self, obj, create):
         value = obj.__dict__[self.name]
-        if isinstance(value, basestring) or (value is None and self.null):
+        if value is None and self.null:
             return value
+        if isinstance(value, basestring):
+            #Test deserializing string. Failure means it needs to be serialized
+            #as a string
+            try:
+                self.loads(value)
+            except Exception:
+                pass
+            else:
+                return value
         return self.dumps(value)
 
     def contribute_to_class(self, cls, name):
