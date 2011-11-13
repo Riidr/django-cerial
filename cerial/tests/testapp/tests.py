@@ -46,6 +46,16 @@ class JSONTest(unittest.TestCase):
     def testUnicode(self):
         entry = self.manager.create(f={'k': u'åäö'})
         entry = self.manager.get(pk=entry.pk)
+        
+    def testString(self):
+        entry = self.manager.create(f="test")
+        entry = self.manager.get(pk=entry.pk)
+        self.assertEqual(entry.f, "test")
+
+    def testSerializedString(self):
+        entry = self.manager.create(f='{"test":"value"}')
+        entry = self.manager.get(pk=entry.pk)
+        self.assertEqual(entry.f, {"test":"value"})
         self.assertEqual(entry.f, {'k': u'åäö'})
 
 
