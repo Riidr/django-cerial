@@ -16,6 +16,9 @@ class CerialField(models.TextField):
         Serialize obj
         """
         raise NotImplemented
+        
+    def value_from_object(self, obj):
+        return self.dumps(super(CerialField, self).value_from_object(obj))
 
     def pre_save(self, obj, create):
         value = obj.__dict__[self.name]
