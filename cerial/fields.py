@@ -20,6 +20,9 @@ class CerialField(models.TextField):
     def value_from_object(self, obj):
         return self.dumps(super(CerialField, self).value_from_object(obj))
 
+    def value_to_string(self, obj):
+        return self.dumps(obj.__dict__[self.name])
+
     def pre_save(self, obj, create):
         value = obj.__dict__[self.name]
         if value is None and self.null:
