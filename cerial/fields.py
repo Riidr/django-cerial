@@ -1,5 +1,8 @@
 import cPickle
-from django.utils import simplejson as json
+try:
+    from django.utils import simplejson as json
+except ImportError:
+    import json
 from django.db import models
 from .serializers import SortedJSONEncoder
 
